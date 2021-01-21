@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/browserFragment">
+    <fragment
+        android:id="@+id/browserFragment"
+        android:name="com.mywebreviews.BrowserFragment"
+        android:label="fragment_browser"
+        tools:layout="@layout/fragment_browser" >
+        <action
+            android:id="@+id/action_browserFragment_to_viewReview"
+            app:destination="@id/viewReview"
+            app:enterAnim="@anim/fragment_close_enter"
+            app:exitAnim="@anim/fragment_close_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/viewReview"
+        android:name="com.mywebreviews.ReviewFragment"
+        android:label="fragment_view_review"
+        tools:layout="@layout/fragment_view_review" >
+        <argument
+            android:name="initial_domain"
+            app:argType="string"
+            android:defaultValue="www.google.com" />
+        <action
+            android:id="@+id/action_viewReview_to_browserFragment"
+            app:destination="@id/browserFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit" />
+    </fragment>
+</navigation>

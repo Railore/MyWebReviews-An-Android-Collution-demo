@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".BrowserFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/rating_bar_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:clickable="true">
+
+            <RatingBar
+                android:id="@+id/url_header_rating_bar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:foregroundGravity="center_vertical"
+                android:isIndicator="true"
+                android:max="5"
+                android:progress="@integer/default_rating_score"
+                android:theme="@style/RatingBar" />
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/navigator_url_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="textUri|textShortMessage|textLongMessage"
+            android:selectAllOnFocus="true"
+            android:text="@string/initial_website"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/go_to_web_button"
+            style="@style/Widget.AppCompat.Button.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:foregroundGravity="right|center_horizontal"
+            android:text="@string/go_to_web_button" />
+
+    </LinearLayout>
+
+    <WebView
+        android:id="@+id/web_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>
