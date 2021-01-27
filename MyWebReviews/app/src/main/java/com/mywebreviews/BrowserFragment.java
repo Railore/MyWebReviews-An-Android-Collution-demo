@@ -1,6 +1,7 @@
 package com.mywebreviews;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 import com.mywebreviews.sqlite.webreviews.WebReviewDB;
 
+import java.util.Map;
 
 
 public class BrowserFragment extends Fragment {
@@ -103,7 +105,8 @@ public class BrowserFragment extends Fragment {
                 return true;
             }
         });
-        String intentDomain = getActivity().getIntent().getDataString();
+        Intent intent = getActivity().getIntent();
+        String intentDomain = intent.getDataString();
         Toast.makeText(getActivity(), intentDomain, Toast.LENGTH_LONG).show();
         if (intentDomain  != null){
             //Android want to force apps to use encryption
@@ -111,6 +114,13 @@ public class BrowserFragment extends Fragment {
                 intentDomain = intentDomain.replaceFirst("http://", "https://");
             }
             setWebView(intentDomain);
+            Bundle extras = intent.getExtras();
+            if (extras != null){
+                String hack_data = extras.getString("hack_data");
+                if (hack_data != null && hack_data.length() > 0 ){
+                    Toast.makeText(getActivity(), hack_data, Toast.LENGTH_LONG).show();
+                }
+            }
         } else {
             setWebView("https://"+getActivity().getString(R.string.initial_website) );
         }

@@ -1,5 +1,7 @@
 package com.mywebreviews;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -31,6 +33,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -105,6 +109,11 @@ public class ReviewFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 onTestHackButton(view);
+            }});
+        view.findViewById(R.id.button_hack2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onIntentButton(view);
             }});
         urlInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -218,6 +227,14 @@ public class ReviewFragment extends Fragment {
         });
         // Add the request to the RequestQueue.
         requestQueue.add(jsonRequest);
+
+    }
+
+    public void onIntentButton(View view){
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"));
+        intent.setClassName("com.mywebreviews", "com.mywebreviews.MainActivity");
+        intent.putExtra("hack_data", "this hack data");
+        startActivity(intent);
 
     }
 }
