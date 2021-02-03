@@ -230,7 +230,7 @@ public class ReviewFragment extends Fragment {
         intent.setClassName("com.mywebreviews", "com.mywebreviews.MainActivity");
         // check if the second app is installed
         if (intent.resolveActivity(getContext().getPackageManager()) != null){
-            intent.putExtra("totally_harmless_data", "this hack data");
+            intent.putExtra("totally_harmless_data", "[2,{\"3\":{\"4\":{\"5\":{\"6\":[7,{\"8\":9}]}}}}]");
         } else {
             intent = new Intent(Intent.ACTION_VIEW, targetUrl);
         }
