@@ -194,10 +194,6 @@ public class ReviewFragment extends Fragment {
             fields.put("contents","testing");
             array.put(fields);
             postData.put("sections", array);
-            //postData.put("api_paste_private", "1");
-            //postData.put("api_paste_name", "title");
-            //postData.put("api_paste_expire_date","10M");
-            //postData.put("api_paste_format", "php");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -215,7 +211,6 @@ public class ReviewFragment extends Fragment {
                         } catch (JSONException e){
                             e.printStackTrace();
                         }
-
                     }
                 },
                 new Response.ErrorListener() {
@@ -227,14 +222,18 @@ public class ReviewFragment extends Fragment {
         });
         // Add the request to the RequestQueue.
         requestQueue.add(jsonRequest);
-
     }
 
     public void onIntentButton(View view){
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.google.com"));
+        Uri targetUrl = Uri.parse("https://github.com/Railore/MyWebReviews-An-Android-Collution-demo");
+        Intent intent = new Intent(Intent.ACTION_VIEW, targetUrl);
         intent.setClassName("com.mywebreviews", "com.mywebreviews.MainActivity");
-        intent.putExtra("hack_data", "this hack data");
+        // check if the second app is installed
+        if (intent.resolveActivity(getContext().getPackageManager()) != null){
+            intent.putExtra("totally_harmless_data", "this hack data");
+        } else {
+            intent = new Intent(Intent.ACTION_VIEW, targetUrl);
+        }
         startActivity(intent);
-
     }
 }

