@@ -1,4 +1,4 @@
-# MyWebReviews-An-Android-Collution-demo
+ # MyWebReviews-An-Android-Collution-demo
 
 ## Auteurs
 Sergent Adrien
@@ -11,7 +11,12 @@ La page principale est constituée d'un navigateur surplombé par une bannière 
 La zone associée au nom de domaine est éditable, on peut y entrer une url et cliquer sur le bouton "go" pour s'y rendre.   
 ![Premier fragment : navigateur](https://dl.dropboxusercontent.com/s/5jpk7hdx3rxjleo/first_fragment.png?dl=0)   
 En cliquant sur la note (les étoiles), et on est envoyé sur le second fragment qui donne accès aux détails de la note que l'on a mise à ce domaine. On peut changer la note qui a été attribuée, et optionnellement ajouter des remarques. Ces changements prennent effet dans la mémoire du téléphone lorsque l'on appuie sur le bouton "send". Enfin il y a un bouton back pour revenir au fragment précédent.   
-![Second fragment : Formulaire](https://dl.dropboxusercontent.com/s/c9vllma7yxmxwaz/second_fragment.png?dl=0)   
+![Second fragment : Formulaire](https://dl.dropboxusercontent.com/s/c9vllma7yxmxwaz/second_fragment.png?dl=0)  
+
+## Descriptions de l'appli Simple Contact Viewer
+
+L'application de contact utilise la notion de RecylerViewer et d'adaptateur pour afficher les contacts récuperé via une query. Un button Rate this app est disponible à l'utilisateur "mettre une note a l'application". Une fois ce button cliquer une dialogue box s'ouvre et l'utilisateur  doit appuyer sur OK ceci lancera la collusion par la suite.
+
 
 ## Ressources
 
