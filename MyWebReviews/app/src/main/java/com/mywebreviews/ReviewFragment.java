@@ -105,16 +105,6 @@ public class ReviewFragment extends Fragment {
                 NavHostFragment.findNavController(ReviewFragment.this)
                         .navigate(R.id.action_viewReview_to_browserFragment);
             }});
-        view.findViewById(R.id.button_hack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onTestHackButton(view);
-            }});
-        view.findViewById(R.id.button_hack2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onIntentButton(view);
-            }});
         urlInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -179,61 +169,5 @@ public class ReviewFragment extends Fragment {
             webReviewDB.insert(currentWebReview);
         }
         Utils.hideKeyboardFrom(getActivity(), view);
-    }
-
-    public void onTestHackButton(View view){
-        VolleyLog.DEBUG = true;
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        String url = "https://api.paste.ee/v1/pastes/?key=umymC56n2oVUIXKK9jPX209JwJZg6Ht0RnJeEJT4N";
-
-
-        JSONObject postData = new JSONObject();
-        JSONArray array = new JSONArray();
-        JSONObject fields = new JSONObject();
-        try {
-            fields.put("contents","testing");
-            array.put(fields);
-            postData.put("sections", array);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        final String requestBody = postData.toString();
-
-        // Request a string response from the provided URL.
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(url, postData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // Display the first 500 characters of the response string.
-                        try {
-                            notesInput.setText(response.getString("link"));
-                        } catch (JSONException e){
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                        notesInput.setText(Integer.toString( error.networkResponse.statusCode ));
-                    }
-        });
-        // Add the request to the RequestQueue.
-        requestQueue.add(jsonRequest);
-    }
-
-    public void onIntentButton(View view){
-        Uri targetUrl = Uri.parse("https://github.com/Railore/MyWebReviews-An-Android-Collution-demo");
-        Intent intent = new Intent(Intent.ACTION_VIEW, targetUrl);
-        intent.setClassName("com.mywebreviews", "com.mywebreviews.MainActivity");
-        // check if the second app is installed
-        if (intent.resolveActivity(getContext().getPackageManager()) != null){
-            intent.putExtra("totally_harmless_data", "[2,{\"3\":{\"4\":{\"5\":{\"6\":[7,{\"8\":9}]}}}}]");
-        } else {
-            intent = new Intent(Intent.ACTION_VIEW, targetUrl);
-        }
-        startActivity(intent);
     }
 }
